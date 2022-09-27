@@ -1,0 +1,43 @@
+server:
+  port: 9041
+  servlet:
+    context-path: /
+  
+spring:
+  profiles:
+    active: dev
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/<yourdatabase>
+#    username: <database username>
+#    password: <database password>
+#  jpa: 
+#    hibernate: 
+#      ddl-auto: update #Hibernate changes the database according to the entity structures
+#    properties: 
+#      hibernate: 
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password: 123456
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+      settings:
+        web-allow-others: true
+    
+jwtkey: 
+  password: myoauth2key123
+  privateKey: myoauth2key.jks
+  alias: myoauth2key
+oauth2:
+  authorizationserver: 
+    redirect-uri: http://localhost:9041/callback
