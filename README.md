@@ -12,6 +12,19 @@ To install this demo application, please run the following command in a terminal
 git clone https://github.com/hailiangxie/myoauth2authorization_proj.git
 cd myoauth2authorization_proj
 ```
+## Cryptographic Key
+To generate the cryptographic key, please run the following command in a terminal window:
+<br>
+```cmd
+keytool -genkeypair -alias myoauth2key -keyalg RSA -keypass myoauth2key123 -keystore myoauth2key.jks -storepass myoauth2key123
+```
+And we should configure the cryptographic key in the `src/main/resources/application.yml` file.
+```yml
+jwtkey: 
+  password: myoauth2key123
+  privateKey: myoauth2key.jks
+  alias: myoauth2key
+```
 ## Run the Application
 To run the application, run the following command in a terminal window:
 <br>
@@ -21,20 +34,32 @@ cd myoauth2authorization_proj
 ```
 After everything starts, you should be able to test the Authorization Server.
 ## Test
-You shoulbe be able to test the Authorization Server endpoints by API Testing tools. For example, `curl`, `Postman`.
-- Get the authorization code: Open the web browser and input the url (e.g., http://localhost:9041/oauth/authorize).
+Now we shoulbe be able to test the Authorization Server endpoints by API Testing tools. For example, `curl`, `Postman`.
+- Get the authorization code: Open the web browser and input the endpoint `/oauth/authorize`. e.g.:
+```http
+http://localhost:9041/oauth/authorize?client_id=oauth2_client1&redirect_uri=http://localhost:9041/callback&scope=read&response_type=code
 ```
-The endpoint /oauth/authorize is protect and it should promot to login with username and password. If the authentication is ok then the authorization code should be generated.
+Here we have to provide the following parameters:
 ```
-- Issue a new access token with authorization code by calling the endpoint `/oauth/token`.
+The following parameter should be provided:
+1. client_id=(e.g., oauth2_client1)
+2. redirect_uri=(e.g., http://localhost:9041/callback)
+3. scope=(e.g., read)
+4. response_type=code
+```
+After that is should redirect to user authentication (username and password). If the authentication is ok it should return the authorization code.
+- Issue a new access token with `authorization code` by calling the endpoint `/oauth/token`.
 ```
 The following parameter should be provided:
 1. grant_type=authorization_code
-2. authorization_code=(e.g., AB1234)
+2. code=(e.g., BXoULC)
 3. scope=(e.g., read)
+4. redirect_uri=(e.g., http://localhost:9041/callback)
+5. client_Id=(e.g., oauth2_client1)
+6. client_secret=(e.g., 123456)
 And also we have to provide the clientId and clientSecret to authenticate.
 ```
-- Issue a new access token with basic authentication by calling the endpoint `/oauth/token`.
+- Issue a new access token with `password` by calling the endpoint `/oauth/token`.
 ```
 The following parameter should be provided:
 1. grant_type=password
