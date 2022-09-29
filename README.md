@@ -81,9 +81,9 @@ The following parameter should be provided:
 2. refresh_token=(the refresh toekn was issued with access token in the first step)
 And also we have to provide the clientId and clientSecret to authenticate.
 ```
-- Get the cryptographic public key by calling the endpoint `/oauth/token`. This public key should be configured in the Resource Server.
+- Get the cryptographic public key by calling the endpoint `/oauth/token_key`. This public key should be configured in a [Resource Server](https://github.com/hailiangxie/myopenapi_codegen_resourceserver_proj/).
 ```
-We only have to provide the clientId and clientSecret to authenticate.
+We have to provide the clientId and clientSecret to authenticate.
 ```
 ## See Also
 The following guides may also be helpful:
