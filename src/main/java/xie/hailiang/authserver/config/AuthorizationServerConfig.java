@@ -86,6 +86,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		log.info(">>> AuthorizationServerConfig.configure(ClientDetailsServiceConfigurer clients) started");
+		clients.jdbc(dataSource);
+		/**
+		 * for DEV only
 	    clients.inMemory()
 	             .withClient("oauth2_client1")
 	             .secret(passwordEncoder.encode("123456"))
@@ -100,7 +103,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	             .scopes("read", "write")
 	             .redirectUris(redirectUri)
 	             .autoApprove(true);
-	  }
+	   **/
+	}
 	
 	@Bean
 	public TokenStore tokenStore() {
